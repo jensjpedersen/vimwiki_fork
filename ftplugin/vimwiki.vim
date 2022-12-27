@@ -619,10 +619,10 @@ endfunction
 "     \ vimwiki#tbl#kbd_tab()
 " inoremap <silent><buffer><expr> <Plug>VimwikiTablePrevCell
 "     \ vimwiki#tbl#kbd_shift_tab()
-if str2nr(vimwiki#vars#get_global('key_mappings').table_mappings)
-  call vimwiki#u#map_key('i', '<Tab>', '<Plug>VimwikiTableNextCell')
-  call vimwiki#u#map_key('i', '<S-Tab>', '<Plug>VimwikiTablePrevCell')
-endif
+" if str2nr(vimwiki#vars#get_global('key_mappings').table_mappings)
+"   call vimwiki#u#map_key('i', '<Tab>', '<Plug>VimwikiTableNextCell')
+"   call vimwiki#u#map_key('i', '<S-Tab>', '<Plug>VimwikiTablePrevCell')
+" endif
 
 " <Plug> table formatting definitions
 nnoremap <silent><buffer> <Plug>VimwikiTableAlignQ

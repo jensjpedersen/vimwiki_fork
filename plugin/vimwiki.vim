@@ -327,9 +327,9 @@ augroup vimwiki
   exe 'autocmd BufNewFile '.pat.' call s:create_h1(expand("%:p"))'
   " Format tables when exit from insert mode. Do not use textwidth to
   " autowrap tables.
-  if vimwiki#vars#get_global('table_auto_fmt')
-    exe 'autocmd InsertLeave '.pat.' call vimwiki#tbl#format(line("."), 2)'
-  endif
+  " if vimwiki#vars#get_global('table_auto_fmt')
+  "   exe 'autocmd InsertLeave '.pat.' call vimwiki#tbl#format(line("."), 2)'
+  " endif
   if vimwiki#vars#get_global('folding') =~? ':quick$'
     " from http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
     " Don't screw up folds when inserting text that might affect them, until

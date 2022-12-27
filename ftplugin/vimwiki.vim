@@ -615,10 +615,10 @@ function! s:CR(normal, just_mrkr) abort
 endfunction
 
 " insert mode table mappings
-inoremap <silent><buffer><expr> <Plug>VimwikiTableNextCell
-    \ vimwiki#tbl#kbd_tab()
-inoremap <silent><buffer><expr> <Plug>VimwikiTablePrevCell
-    \ vimwiki#tbl#kbd_shift_tab()
+" inoremap <silent><buffer><expr> <Plug>VimwikiTableNextCell
+"     \ vimwiki#tbl#kbd_tab()
+" inoremap <silent><buffer><expr> <Plug>VimwikiTablePrevCell
+"     \ vimwiki#tbl#kbd_shift_tab()
 if str2nr(vimwiki#vars#get_global('key_mappings').table_mappings)
   call vimwiki#u#map_key('i', '<Tab>', '<Plug>VimwikiTableNextCell')
   call vimwiki#u#map_key('i', '<S-Tab>', '<Plug>VimwikiTablePrevCell')

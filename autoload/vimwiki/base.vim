@@ -2102,120 +2102,120 @@ function! vimwiki#base#TO_table_cell(inner, visual) abort
 endfunction
 
 
-function! vimwiki#base#TO_table_col(inner, visual) abort
-  " Jump to next table col (Exported for text object)
-  let t_rows = vimwiki#tbl#get_rows(line('.'))
-  if empty(t_rows)
-    return
-  endif
+" function! vimwiki#base#TO_table_col(inner, visual) abort
+"   " Jump to next table col (Exported for text object)
+"   let t_rows = vimwiki#tbl#get_rows(line('.'))
+"   if empty(t_rows)
+"     return
+"   endif
 
-  " TODO: refactor it!
-  if a:visual
-    normal! `>
-    let sel_end = getpos('.')
-    normal! `<
-    let sel_start = getpos('.')
+"   " TODO: refactor it!
+"   if a:visual
+"     normal! `>
+"     let sel_end = getpos('.')
+"     normal! `<
+"     let sel_start = getpos('.')
 
-    let firsttime = sel_start == sel_end
+"     let firsttime = sel_start == sel_end
 
-    if firsttime
-      " place cursor to the top row of the table
-      call vimwiki#u#cursor(t_rows[0][0], virtcol('.'))
-      " do not accept the match at cursor position if cursor is next to column
-      " separator of the table separator (^ is a cursor):
-      " |-----^-+-------|
-      " | bla   | bla   |
-      " |-------+-------|
-      " or it will select wrong column.
-      if strpart(getline('.'), virtcol('.')-1) =~# '^-+'
-        let s_flag = 'b'
-      else
-        let s_flag = 'cb'
-      endif
-      " search the column separator backwards
-      if !search('|\|\(-+-\)', s_flag, line('.'))
-        return
-      endif
-      " -+- column separator is matched --> move cursor to the + sign
-      if getline('.')[virtcol('.')] ==# '+'
-        normal! l
-      endif
-      " inner selection --> reduce selection
-      if a:inner
-        normal! 2l
-      endif
-      let sel_start = getpos('.')
-    endif
+"     if firsttime
+"       " place cursor to the top row of the table
+"       call vimwiki#u#cursor(t_rows[0][0], virtcol('.'))
+"       " do not accept the match at cursor position if cursor is next to column
+"       " separator of the table separator (^ is a cursor):
+"       " |-----^-+-------|
+"       " | bla   | bla   |
+"       " |-------+-------|
+"       " or it will select wrong column.
+"       if strpart(getline('.'), virtcol('.')-1) =~# '^-+'
+"         let s_flag = 'b'
+"       else
+"         let s_flag = 'cb'
+"       endif
+"       " search the column separator backwards
+"       if !search('|\|\(-+-\)', s_flag, line('.'))
+"         return
+"       endif
+"       " -+- column separator is matched --> move cursor to the + sign
+"       if getline('.')[virtcol('.')] ==# '+'
+"         normal! l
+"       endif
+"       " inner selection --> reduce selection
+"       if a:inner
+"         normal! 2l
+"       endif
+"       let sel_start = getpos('.')
+"     endif
 
-    normal! `>
-    if !firsttime && getline('.')[virtcol('.')] ==# '|'
-      normal! l
-    elseif a:inner && getline('.')[virtcol('.')+1] =~# '[|+]'
-      normal! 2l
-    endif
-    " search for the next column separator
-    call search('|\|\(-+-\)', '', line('.'))
-    " Outer selection selects a column without border on the right. So we move
-    " our cursor left if the previous search finds | border, not -+-.
-    if getline('.')[virtcol('.')] !=# '+'
-      normal! h
-    endif
-    if a:inner
-      " reduce selection a bit more if inner.
-      normal! h
-    endif
-    " expand selection to the bottom line of the table
-    call vimwiki#u#cursor(t_rows[-1][0], virtcol('.'))
-    let sel_end = getpos('.')
+"     normal! `>
+"     if !firsttime && getline('.')[virtcol('.')] ==# '|'
+"       normal! l
+"     elseif a:inner && getline('.')[virtcol('.')+1] =~# '[|+]'
+"       normal! 2l
+"     endif
+"     " search for the next column separator
+"     call search('|\|\(-+-\)', '', line('.'))
+"     " Outer selection selects a column without border on the right. So we move
+"     " our cursor left if the previous search finds | border, not -+-.
+"     if getline('.')[virtcol('.')] !=# '+'
+"       normal! h
+"     endif
+"     if a:inner
+"       " reduce selection a bit more if inner.
+"       normal! h
+"     endif
+"     " expand selection to the bottom line of the table
+"     call vimwiki#u#cursor(t_rows[-1][0], virtcol('.'))
+"     let sel_end = getpos('.')
 
-    call setpos('.', sel_start)
-    exe "normal! \<C-v>"
-    call setpos('.', sel_end)
+"     call setpos('.', sel_start)
+"     exe "normal! \<C-v>"
+"     call setpos('.', sel_end)
 
-  else
-    " place cursor to the top row of the table
-    call vimwiki#u#cursor(t_rows[0][0], virtcol('.'))
-    " do not accept the match at cursor position if cursor is next to column
-    " separator of the table separator (^ is a cursor):
-    " |-----^-+-------|
-    " | bla   | bla   |
-    " |-------+-------|
-    " or it will select wrong column.
-    if strpart(getline('.'), virtcol('.')-1) =~# '^-+'
-      let s_flag = 'b'
-    else
-      let s_flag = 'cb'
-    endif
-    " search the column separator backwards
-    if !search('|\|\(-+-\)', s_flag, line('.'))
-      return
-    endif
-    " -+- column separator is matched --> move cursor to the + sign
-    if getline('.')[virtcol('.')] ==# '+'
-      normal! l
-    endif
-    " inner selection --> reduce selection
-    if a:inner
-      normal! 2l
-    endif
+"   else
+"     " place cursor to the top row of the table
+"     call vimwiki#u#cursor(t_rows[0][0], virtcol('.'))
+"     " do not accept the match at cursor position if cursor is next to column
+"     " separator of the table separator (^ is a cursor):
+"     " |-----^-+-------|
+"     " | bla   | bla   |
+"     " |-------+-------|
+"     " or it will select wrong column.
+"     if strpart(getline('.'), virtcol('.')-1) =~# '^-+'
+"       let s_flag = 'b'
+"     else
+"       let s_flag = 'cb'
+"     endif
+"     " search the column separator backwards
+"     if !search('|\|\(-+-\)', s_flag, line('.'))
+"       return
+"     endif
+"     " -+- column separator is matched --> move cursor to the + sign
+"     if getline('.')[virtcol('.')] ==# '+'
+"       normal! l
+"     endif
+"     " inner selection --> reduce selection
+"     if a:inner
+"       normal! 2l
+"     endif
 
-    exe "normal! \<C-V>"
+"     exe "normal! \<C-V>"
 
-    " search for the next column separator
-    call search('|\|\(-+-\)', '', line('.'))
-    " Outer selection selects a column without border on the right. So we move
-    " our cursor left if the previous search finds | border, not -+-.
-    if getline('.')[virtcol('.')] !=# '+'
-      normal! h
-    endif
-    " reduce selection a bit more if inner.
-    if a:inner
-      normal! h
-    endif
-    " expand selection to the bottom line of the table
-    call vimwiki#u#cursor(t_rows[-1][0], virtcol('.'))
-  endif
-endfunction
+"     " search for the next column separator
+"     call search('|\|\(-+-\)', '', line('.'))
+"     " Outer selection selects a column without border on the right. So we move
+"     " our cursor left if the previous search finds | border, not -+-.
+"     if getline('.')[virtcol('.')] !=# '+'
+"       normal! h
+"     endif
+"     " reduce selection a bit more if inner.
+"     if a:inner
+"       normal! h
+"     endif
+"     " expand selection to the bottom line of the table
+"     call vimwiki#u#cursor(t_rows[-1][0], virtcol('.'))
+"   endif
+" endfunction
 
 
 function! vimwiki#base#AddHeaderLevel(...) abort

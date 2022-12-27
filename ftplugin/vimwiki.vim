@@ -350,11 +350,11 @@ command! -buffer VimwikiListToggle call vimwiki#lst#toggle_list_item()
 command! -buffer -range VimwikiRemoveDone call vimwiki#lst#remove_done(1, "<range>", <line1>, <line2>)
 
 " table commands
-command! -buffer -nargs=* VimwikiTable call vimwiki#tbl#create(<f-args>)
-command! -buffer -nargs=? VimwikiTableAlignQ call vimwiki#tbl#align_or_cmd('gqq', <f-args>)
-command! -buffer -nargs=? VimwikiTableAlignW call vimwiki#tbl#align_or_cmd('gww', <f-args>)
-command! -buffer VimwikiTableMoveColumnLeft call vimwiki#tbl#move_column_left()
-command! -buffer VimwikiTableMoveColumnRight call vimwiki#tbl#move_column_right()
+"command! -buffer -nargs=* VimwikiTable call vimwiki#tbl#create(<f-args>)
+" command! -buffer -nargs=? VimwikiTableAlignQ call vimwiki#tbl#align_or_cmd('gqq', <f-args>)
+" command! -buffer -nargs=? VimwikiTableAlignW call vimwiki#tbl#align_or_cmd('gww', <f-args>)
+" command! -buffer VimwikiTableMoveColumnLeft call vimwiki#tbl#move_column_left()
+" command! -buffer VimwikiTableMoveColumnRight call vimwiki#tbl#move_column_right()
 
 " diary commands
 command! -buffer VimwikiDiaryNextDay call vimwiki#diary#goto_next_day()
@@ -605,12 +605,12 @@ if str2nr(vimwiki#vars#get_global('key_mappings').lists)
 endif
 
 function! s:CR(normal, just_mrkr) abort
-  let res = vimwiki#tbl#kbd_cr()
-  if res !=? ''
-    exe 'normal! ' . res . "\<Right>"
-    startinsert
-    return
-  endif
+  " let res = vimwiki#tbl#kbd_cr()
+  " if res !=? ''
+  "   exe 'normal! ' . res . "\<Right>"
+  "   startinsert
+  "   return
+  " endif
   call vimwiki#lst#kbd_cr(a:normal, a:just_mrkr)
 endfunction
 

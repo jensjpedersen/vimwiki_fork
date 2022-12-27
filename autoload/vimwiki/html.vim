@@ -1300,39 +1300,39 @@ function! s:process_tag_table(line, table, header_ids) abort
     return cell
   endfunction
 
-  function! s:table_add_row(table, line) abort
-    if empty(a:table)
-      if a:line =~# '^\s\+'
-        let row = ['center', []]
-      else
-        let row = ['normal', []]
-      endif
-    else
-      let row = [[]]
-    endif
-    return row
-  endfunction
+  " function! s:table_add_row(table, line) abort
+  "   if empty(a:table)
+  "     if a:line =~# '^\s\+'
+  "       let row = ['center', []]
+  "     else
+  "       let row = ['normal', []]
+  "     endif
+  "   else
+  "     let row = [[]]
+  "   endif
+  "   return row
+  " endfunction
 
-  let table = a:table
-  let lines = []
-  let processed = 0
+  " let table = a:table
+  " let lines = []
+  " let processed = 0
 
-  if vimwiki#tbl#is_separator(a:line)
-    call extend(table, s:table_add_row(a:table, a:line))
-    let processed = 1
-  elseif vimwiki#tbl#is_table(a:line)
-    call extend(table, s:table_add_row(a:table, a:line))
+  " if vimwiki#tbl#is_separator(a:line)
+  "   call extend(table, s:table_add_row(a:table, a:line))
+  "   let processed = 1
+  " elseif vimwiki#tbl#is_table(a:line)
+  "   call extend(table, s:table_add_row(a:table, a:line))
 
-    let processed = 1
-    " let cells = split(a:line, vimwiki#tbl#cell_splitter(), 1)[1: -2]
-    let cells = vimwiki#tbl#get_cells(a:line)
-    call map(cells, 's:table_empty_cell(v:val)')
-    call extend(table[-1], cells)
-  else
-    let table = s:close_tag_table(table, lines, a:header_ids)
-  endif
-  return [processed, lines, table]
-endfunction
+  "   let processed = 1
+  "   " let cells = split(a:line, vimwiki#tbl#cell_splitter(), 1)[1: -2]
+  "   let cells = vimwiki#tbl#get_cells(a:line)
+  "   call map(cells, 's:table_empty_cell(v:val)')
+  "   call extend(table[-1], cells)
+  " else
+  "   let table = s:close_tag_table(table, lines, a:header_ids)
+  " endif
+  " return [processed, lines, table]
+" endfunction
 
 
 function! s:parse_line(line, state) abort
